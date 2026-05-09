@@ -268,11 +268,13 @@
 
   <script>
     const COLORS = ['#E24B4A','#378ADD','#1D9E75','#BA7517','#7F77DD','#D4537E','#639922','#D85A30'];
-    let accounts = [
+    const DEFAULT_ACCOUNTS = [
       { id: 1, name: 'Tax', mode: 'pct', value: 25 },
       { id: 2, name: 'Bills', mode: 'pct', value: 30 },
     ];
-    let nextId = 3;
+    let saved = JSON.parse(localStorage.getItem('income_splitter') || 'null');
+    let accounts = saved ? saved.accounts : JSON.parse(JSON.stringify(DEFAULT_ACCOUNTS));
+    let nextId = saved ? saved.nextId : 3;
 
     function color(i) { return COLORS[i % COLORS.length]; }
 
@@ -287,6 +289,7 @@
 
     function delAccount(id) {
       accounts = accounts.filter(a => a.id !== id);
+      save();
       render();
     }
 
@@ -303,6 +306,10 @@
       render();
     }
 
+    function save() {
+      localStorage.setItem('income_splitter', JSON.stringify({ accounts, nextId }));
+    }
+
     function updateVal(id, v) {
       const a = accounts.find(a => a.id === id);
       if (a) a.value = parseFloat(v) || 0;
@@ -312,6 +319,7 @@
     function updateName(id, v) {
       const a = accounts.find(a => a.id === id);
       if (a) a.name = v;
+      save();
       calcBreakdown();
     }
 
