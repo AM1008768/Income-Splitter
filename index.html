@@ -2,7 +2,11 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Income Splitter" />
+  <title>Income Splitter</title>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -31,124 +35,306 @@
       padding-bottom: 60px;
     }
 
+    /* Header */
     header {
-      padding: 32px 20px 20px;
+      padding: 56px 20px 24px;
       background: linear-gradient(180deg, #0d1528 0%, var(--bg) 100%);
       border-bottom: 1px solid var(--border);
       margin-bottom: 24px;
     }
 
-    .header-top { display: flex; align-items: center; gap: 12px; margin-bottom: 4px; }
+    .header-top {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 4px;
+    }
 
     .logo {
-      width: 36px; height: 36px;
+      width: 36px;
+      height: 36px;
       background: linear-gradient(135deg, var(--accent), var(--accent2));
       border-radius: 10px;
-      display: flex; align-items: center; justify-content: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       font-size: 18px;
     }
 
     header h1 {
-      font-size: 22px; font-weight: 700; letter-spacing: -0.4px;
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.4px;
       background: linear-gradient(90deg, #fff, #94a3b8);
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
 
-    .subtitle { font-size: 13px; color: var(--text-hint); margin-left: 48px; }
+    .subtitle {
+      font-size: 13px;
+      color: var(--text-hint);
+      margin-left: 48px;
+    }
 
+    /* Income card */
     .income-card {
       margin: 0 16px 20px;
       background: linear-gradient(135deg, #1e3a5f, #1a2a4a);
       border: 1px solid rgba(59,130,246,0.3);
       border-radius: var(--radius);
       padding: 20px;
-      position: relative; overflow: hidden;
+      position: relative;
+      overflow: hidden;
     }
 
     .income-card::before {
       content: '';
-      position: absolute; top: -40px; right: -40px;
+      position: absolute;
+      top: -40px; right: -40px;
       width: 120px; height: 120px;
       background: radial-gradient(circle, rgba(99,102,241,0.3), transparent);
       border-radius: 50%;
     }
 
-    .income-label { font-size: 11px; font-weight: 600; color: var(--accent); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 10px; }
+    .income-label {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 10px;
+    }
 
-    .income-wrap { display: flex; align-items: center; gap: 8px; }
+    .income-wrap {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
 
-    .currency-sym { font-size: 32px; font-weight: 300; color: rgba(255,255,255,0.4); line-height: 1; }
+    .currency-sym {
+      font-size: 32px;
+      font-weight: 300;
+      color: rgba(255,255,255,0.4);
+      line-height: 1;
+    }
 
     #income {
-      flex: 1; font-size: 42px; font-weight: 700;
-      border: none; background: transparent; color: #fff;
-      outline: none; width: 100%;
-      -webkit-appearance: none; appearance: none;
+      flex: 1;
+      font-size: 42px;
+      font-weight: 700;
+      border: none;
+      background: transparent;
+      color: #fff;
+      outline: none;
+      width: 100%;
+      -webkit-appearance: none;
+      appearance: none;
       letter-spacing: -1px;
     }
 
     #income::placeholder { color: rgba(255,255,255,0.2); }
 
+    /* Section */
     .section { margin: 0 16px 20px; }
 
-    .section-label { font-size: 11px; font-weight: 600; color: var(--text-hint); text-transform: uppercase; letter-spacing: 0.1em; margin: 0 4px 10px; }
+    .section-label {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-hint);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin: 0 4px 10px;
+    }
 
-    .card { background: var(--surface); border-radius: var(--radius); border: 1px solid var(--border); overflow: hidden; }
+    .card {
+      background: var(--surface);
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      overflow: hidden;
+    }
 
-    .account-row { display: flex; align-items: center; gap: 10px; padding: 14px 16px; border-bottom: 1px solid var(--border); }
+    /* Account rows */
+    .account-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--border);
+      transition: background 0.15s;
+    }
+
     .account-row:last-of-type { border-bottom: none; }
+    .account-row:active { background: var(--surface2); }
 
-    .dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; box-shadow: 0 0 6px currentColor; }
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      box-shadow: 0 0 6px currentColor;
+    }
 
-    .name-input { flex: 1; font-size: 15px; font-weight: 500; background: transparent; border: none; color: var(--text); outline: none; min-width: 0; }
+    .name-input {
+      flex: 1;
+      font-size: 15px;
+      font-weight: 500;
+      background: transparent;
+      border: none;
+      color: var(--text);
+      outline: none;
+      min-width: 0;
+    }
+
+    .name-input:focus {
+      color: #fff;
+    }
 
     .val-input {
-      width: 70px; text-align: right; font-size: 15px; font-weight: 600;
-      background: var(--surface2); border: 1px solid var(--border-mid);
-      border-radius: var(--radius-sm); color: var(--text); padding: 6px 10px;
-      -webkit-appearance: none; appearance: none; outline: none;
+      width: 70px;
+      text-align: right;
+      font-size: 15px;
+      font-weight: 600;
+      background: var(--surface2);
+      border: 1px solid var(--border-mid);
+      border-radius: var(--radius-sm);
+      color: var(--text);
+      padding: 6px 10px;
+      -webkit-appearance: none;
+      appearance: none;
+      outline: none;
+    }
+
+    .val-input:focus {
+      border-color: var(--accent);
     }
 
     .toggle-btn {
-      font-size: 12px; font-weight: 700;
-      background: var(--surface2); border: 1px solid var(--border-mid);
-      border-radius: var(--radius-sm); padding: 6px 10px;
-      color: var(--accent); cursor: pointer; min-width: 38px; text-align: center;
+      font-size: 12px;
+      font-weight: 700;
+      background: var(--surface2);
+      border: 1px solid var(--border-mid);
+      border-radius: var(--radius-sm);
+      padding: 6px 10px;
+      color: var(--accent);
+      cursor: pointer;
+      white-space: nowrap;
+      -webkit-tap-highlight-color: transparent;
+      min-width: 38px;
+      text-align: center;
     }
 
-    .del-btn { background: none; border: none; color: var(--text-hint); font-size: 20px; line-height: 1; cursor: pointer; padding: 0 2px; }
-    .del-btn:hover { color: var(--red); }
+    .toggle-btn:active { opacity: 0.7; }
+
+    .del-btn {
+      background: none;
+      border: none;
+      color: var(--text-hint);
+      font-size: 20px;
+      line-height: 1;
+      cursor: pointer;
+      padding: 0 2px;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .del-btn:active { color: var(--red); }
 
     .add-btn {
-      width: 100%; margin-top: 10px;
-      background: transparent; border: 1px dashed var(--border-mid);
-      border-radius: var(--radius-sm); padding: 11px;
-      font-size: 14px; font-weight: 500; color: var(--text-sec); cursor: pointer;
+      width: calc(100% - 32px);
+      margin: 12px 16px;
+      background: transparent;
+      border: 1px dashed var(--border-mid);
+      border-radius: var(--radius-sm);
+      padding: 11px;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-sec);
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+      display: block;
     }
-    .add-btn:hover { background: var(--surface2); }
 
-    .result-row { display: flex; justify-content: space-between; align-items: center; padding: 14px 16px; border-bottom: 1px solid var(--border); }
+    .add-btn:active { background: var(--surface2); }
+
+    /* Breakdown */
+    .result-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--border);
+    }
+
     .result-row:last-child { border-bottom: none; }
-    .result-label { display: flex; align-items: center; gap: 10px; font-size: 15px; color: var(--text-sec); }
-    .result-amount { font-size: 16px; font-weight: 700; letter-spacing: -0.3px; }
 
-    .remainder-section { margin: 0 16px 20px; }
+    .result-label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 15px;
+      color: var(--text-sec);
+    }
+
+    .result-amount {
+      font-size: 16px;
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+      letter-spacing: -0.3px;
+    }
+
+    /* Remainder */
+    .remainder-section {
+      margin: 0 16px 20px;
+    }
 
     .remainder-card {
       background: linear-gradient(135deg, #064e3b, #065f46);
       border: 1px solid rgba(16,185,129,0.3);
-      border-radius: var(--radius); padding: 18px 20px;
-      display: flex; justify-content: space-between; align-items: center;
+      border-radius: var(--radius);
+      padding: 18px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
 
-    .remainder-card.negative { background: linear-gradient(135deg, #450a0a, #5a1a1a); border-color: rgba(239,68,68,0.3); }
+    .remainder-card.negative {
+      background: linear-gradient(135deg, #450a0a, #5a1a1a);
+      border-color: rgba(239,68,68,0.3);
+    }
 
-    .remainder-title { font-size: 11px; font-weight: 600; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 4px; }
-    .remainder-name { font-size: 17px; font-weight: 600; color: #fff; }
-    .remainder-amount { font-size: 28px; font-weight: 800; color: var(--green); letter-spacing: -1px; }
+    .remainder-left { }
+
+    .remainder-title {
+      font-size: 11px;
+      font-weight: 600;
+      color: rgba(255,255,255,0.5);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 4px;
+    }
+
+    .remainder-name {
+      font-size: 17px;
+      font-weight: 600;
+      color: #fff;
+    }
+
+    .remainder-amount {
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--green);
+      letter-spacing: -1px;
+      font-variant-numeric: tabular-nums;
+    }
+
     .remainder-amount.negative { color: var(--red); }
 
-    .warning { font-size: 13px; color: var(--red); margin: 8px 4px 0; display: none; }
+    .warning {
+      font-size: 13px;
+      color: var(--red);
+      margin: 8px 20px 0;
+      display: none;
+    }
   </style>
 </head>
 <body>
@@ -186,9 +372,9 @@
   <div class="remainder-section">
     <p class="section-label">Remainder</p>
     <div class="remainder-card" id="remainder-card">
-      <div>
+      <div class="remainder-left">
         <p class="remainder-title">Personal account</p>
-        <p class="remainder-name">Personal</p>
+        <p class="remainder-name" id="remainder-name">Personal</p>
       </div>
       <span class="remainder-amount" id="remainder-amount">$0.00</span>
     </div>
@@ -200,34 +386,73 @@
       { id: 1, name: 'Tax', mode: 'pct', value: 25 },
       { id: 2, name: 'Bills', mode: 'pct', value: 30 },
     ];
-    let accounts = JSON.parse(JSON.stringify(DEFAULT));
-    let nextId = 3;
+    let saved = load();
+    let accounts = saved ? saved.accounts : JSON.parse(JSON.stringify(DEFAULT));
+    let nextId = saved ? saved.nextId : 3;
 
     function color(i) { return COLORS[i % COLORS.length]; }
 
+    function save() {
+      const data = JSON.stringify({ accounts, nextId });
+      const expires = new Date(Date.now() + 365*24*60*60*1000).toUTCString();
+      document.cookie = 'income_splitter=' + encodeURIComponent(data) + ';expires=' + expires + ';path=/';
+      try { localStorage.setItem('income_splitter', data); } catch(e) {}
+    }
+
+    function load() {
+      // Try localStorage first
+      try {
+        const ls = localStorage.getItem('income_splitter');
+        if (ls) return JSON.parse(ls);
+      } catch(e) {}
+      // Fall back to cookie
+      const match = document.cookie.match(/income_splitter=([^;]+)/);
+      if (match) { try { return JSON.parse(decodeURIComponent(match[1])); } catch(e) {} }
+      return null;
+    }
+
     function addAccount() {
       accounts.push({ id: nextId++, name: 'New account', mode: 'pct', value: 0 });
-      render();
+      save(); render();
       setTimeout(() => {
         const inputs = document.querySelectorAll('.name-input');
         if (inputs.length) { inputs[inputs.length-1].focus(); inputs[inputs.length-1].select(); }
       }, 50);
     }
 
-    function delAccount(id) { accounts = accounts.filter(a => a.id !== id); render(); }
+    function delAccount(id) {
+      accounts = accounts.filter(a => a.id !== id);
+      save(); render();
+    }
 
     function toggleMode(id) {
       const income = parseFloat(document.getElementById('income').value) || 0;
       const a = accounts.find(a => a.id === id);
-      if (a.mode === 'pct') { a.mode = 'fixed'; a.value = parseFloat((income * a.value / 100).toFixed(2)); }
-      else { a.mode = 'pct'; a.value = income > 0 ? parseFloat((a.value / income * 100).toFixed(2)) : 0; }
-      render();
+      if (a.mode === 'pct') {
+        a.mode = 'fixed';
+        a.value = parseFloat((income * a.value / 100).toFixed(2));
+      } else {
+        a.mode = 'pct';
+        a.value = income > 0 ? parseFloat((a.value / income * 100).toFixed(2)) : 0;
+      }
+      save(); render();
     }
 
-    function updateVal(id, v) { const a = accounts.find(a => a.id === id); if (a) a.value = parseFloat(v)||0; calcBreakdown(); }
-    function updateName(id, v) { const a = accounts.find(a => a.id === id); if (a) a.name = v; calcBreakdown(); }
+    function updateVal(id, v) {
+      const a = accounts.find(a => a.id === id);
+      if (a) a.value = parseFloat(v) || 0;
+      save(); calcBreakdown();
+    }
 
-    function fmt(n) { return '$' + Math.max(0,n).toLocaleString('en-NZ', { minimumFractionDigits: 2, maximumFractionDigits: 2 }); }
+    function updateName(id, v) {
+      const a = accounts.find(a => a.id === id);
+      if (a) a.name = v;
+      save(); calcBreakdown();
+    }
+
+    function fmt(n) {
+      return '$' + Math.max(0,n).toLocaleString('en-NZ', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    }
 
     function calcBreakdown() {
       const income = parseFloat(document.getElementById('income').value) || 0;
@@ -242,7 +467,10 @@
       document.getElementById('warning').style.display = over ? 'block' : 'none';
       document.getElementById('breakdown').innerHTML = results.map(r => `
         <div class="result-row">
-          <div class="result-label"><div class="dot" style="background:${r.color};color:${r.color}"></div>${r.name}</div>
+          <div class="result-label">
+            <div class="dot" style="background:${r.color};color:${r.color}"></div>
+            ${r.name}
+          </div>
           <span class="result-amount" style="color:${r.color}">${fmt(r.amt)}</span>
         </div>`).join('');
       const rc = document.getElementById('remainder-card');
@@ -259,7 +487,7 @@
           <input class="name-input" value="${a.name}" onchange="updateName(${a.id},this.value)" oninput="updateName(${a.id},this.value)" />
           <input type="number" class="val-input" value="${a.value}" min="0" step="${a.mode==='pct'?'0.1':'1'}" inputmode="decimal" onchange="updateVal(${a.id},this.value)" oninput="updateVal(${a.id},this.value)" />
           <button class="toggle-btn" onclick="toggleMode(${a.id})">${a.mode==='pct'?'%':'$'}</button>
-          <button class="del-btn" onclick="delAccount(${a.id})">×</button>
+          <button class="del-btn" onclick="delAccount(${a.id})" aria-label="Delete">×</button>
         </div>`).join('');
       calcBreakdown();
     }
