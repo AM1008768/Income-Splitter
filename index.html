@@ -9,490 +9,236 @@
   <title>Income Splitter</title>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     :root {
-      --bg: #0a0f1e;
-      --surface: #111827;
-      --surface2: #1a2235;
-      --border: rgba(255,255,255,0.07);
-      --border-mid: rgba(255,255,255,0.14);
-      --accent: #3b82f6;
-      --accent2: #6366f1;
-      --text: #f1f5f9;
-      --text-sec: #94a3b8;
-      --text-hint: #475569;
-      --green: #10b981;
-      --red: #ef4444;
-      --radius: 16px;
-      --radius-sm: 10px;
+      --bg: #0a0f1e; --surface: #111827; --surface2: #1a2235;
+      --border: rgba(255,255,255,0.07); --border-mid: rgba(255,255,255,0.14);
+      --accent: #3b82f6; --accent2: #6366f1;
+      --text: #f1f5f9; --text-sec: #94a3b8; --text-hint: #475569;
+      --green: #10b981; --red: #ef4444;
+      --radius: 16px; --radius-sm: 10px;
     }
-
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      min-height: 100vh;
-      padding-bottom: 60px;
-    }
-
-    /* Header */
-    header {
-      padding: 56px 20px 24px;
-      background: linear-gradient(180deg, #0d1528 0%, var(--bg) 100%);
-      border-bottom: 1px solid var(--border);
-      margin-bottom: 24px;
-    }
-
-    .header-top {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 4px;
-    }
-
-    .logo {
-      width: 36px;
-      height: 36px;
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 18px;
-    }
-
-    header h1 {
-      font-size: 22px;
-      font-weight: 700;
-      letter-spacing: -0.4px;
-      background: linear-gradient(90deg, #fff, #94a3b8);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .subtitle {
-      font-size: 13px;
-      color: var(--text-hint);
-      margin-left: 48px;
-    }
-
-    /* Income card */
-    .income-card {
-      margin: 0 16px 20px;
-      background: linear-gradient(135deg, #1e3a5f, #1a2a4a);
-      border: 1px solid rgba(59,130,246,0.3);
-      border-radius: var(--radius);
-      padding: 20px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .income-card::before {
-      content: '';
-      position: absolute;
-      top: -40px; right: -40px;
-      width: 120px; height: 120px;
-      background: radial-gradient(circle, rgba(99,102,241,0.3), transparent);
-      border-radius: 50%;
-    }
-
-    .income-label {
-      font-size: 11px;
-      font-weight: 600;
-      color: var(--accent);
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      margin-bottom: 10px;
-    }
-
-    .income-wrap {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .currency-sym {
-      font-size: 32px;
-      font-weight: 300;
-      color: rgba(255,255,255,0.4);
-      line-height: 1;
-    }
-
-    #income {
-      flex: 1;
-      font-size: 42px;
-      font-weight: 700;
-      border: none;
-      background: transparent;
-      color: #fff;
-      outline: none;
-      width: 100%;
-      -webkit-appearance: none;
-      appearance: none;
-      letter-spacing: -1px;
-    }
-
+    body { font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; padding-bottom: 60px; }
+    header { padding: 56px 20px 20px; background: linear-gradient(180deg, #0d1528 0%, var(--bg) 100%); border-bottom: 1px solid var(--border); margin-bottom: 24px; }
+    .header-top { display: flex; align-items: center; gap: 12px; margin-bottom: 4px; }
+    .logo { width: 36px; height: 36px; background: linear-gradient(135deg, var(--accent), var(--accent2)); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 18px; }
+    header h1 { font-size: 22px; font-weight: 700; letter-spacing: -0.4px; background: linear-gradient(90deg, #fff, #94a3b8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .subtitle { font-size: 13px; color: var(--text-hint); margin-left: 48px; }
+    .income-card { margin: 0 16px 20px; background: linear-gradient(135deg, #1e3a5f, #1a2a4a); border: 1px solid rgba(59,130,246,0.3); border-radius: var(--radius); padding: 20px; position: relative; overflow: hidden; }
+    .income-card::before { content: ''; position: absolute; top: -40px; right: -40px; width: 120px; height: 120px; background: radial-gradient(circle, rgba(99,102,241,0.3), transparent); border-radius: 50%; }
+    .income-label { font-size: 11px; font-weight: 600; color: var(--accent); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 10px; }
+    .income-wrap { display: flex; align-items: center; gap: 8px; }
+    .currency-sym { font-size: 32px; font-weight: 300; color: rgba(255,255,255,0.4); line-height: 1; }
+    #income { flex: 1; font-size: 42px; font-weight: 700; border: none; background: transparent; color: #fff; outline: none; width: 100%; -webkit-appearance: none; appearance: none; letter-spacing: -1px; }
     #income::placeholder { color: rgba(255,255,255,0.2); }
-
-    /* Section */
     .section { margin: 0 16px 20px; }
-
-    .section-label {
-      font-size: 11px;
-      font-weight: 600;
-      color: var(--text-hint);
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      margin: 0 4px 10px;
-    }
-
-    .card {
-      background: var(--surface);
-      border-radius: var(--radius);
-      border: 1px solid var(--border);
-      overflow: hidden;
-    }
-
-    /* Account rows */
-    .account-row {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 14px 16px;
-      border-bottom: 1px solid var(--border);
-      transition: background 0.15s;
-    }
-
+    .section-label { font-size: 11px; font-weight: 600; color: var(--text-hint); text-transform: uppercase; letter-spacing: 0.1em; margin: 0 4px 10px; }
+    .card { background: var(--surface); border-radius: var(--radius); border: 1px solid var(--border); overflow: hidden; }
+    .account-row { display: flex; align-items: center; gap: 10px; padding: 14px 16px; border-bottom: 1px solid var(--border); }
     .account-row:last-of-type { border-bottom: none; }
-    .account-row:active { background: var(--surface2); }
-
-    .dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      flex-shrink: 0;
-      box-shadow: 0 0 6px currentColor;
-    }
-
-    .name-input {
-      flex: 1;
-      font-size: 15px;
-      font-weight: 500;
-      background: transparent;
-      border: none;
-      color: var(--text);
-      outline: none;
-      min-width: 0;
-    }
-
-    .name-input:focus {
-      color: #fff;
-    }
-
-    .val-input {
-      width: 70px;
-      text-align: right;
-      font-size: 15px;
-      font-weight: 600;
-      background: var(--surface2);
-      border: 1px solid var(--border-mid);
-      border-radius: var(--radius-sm);
-      color: var(--text);
-      padding: 6px 10px;
-      -webkit-appearance: none;
-      appearance: none;
-      outline: none;
-    }
-
-    .val-input:focus {
-      border-color: var(--accent);
-    }
-
-    .toggle-btn {
-      font-size: 12px;
-      font-weight: 700;
-      background: var(--surface2);
-      border: 1px solid var(--border-mid);
-      border-radius: var(--radius-sm);
-      padding: 6px 10px;
-      color: var(--accent);
-      cursor: pointer;
-      white-space: nowrap;
-      -webkit-tap-highlight-color: transparent;
-      min-width: 38px;
-      text-align: center;
-    }
-
+    .dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; box-shadow: 0 0 6px currentColor; }
+    .name-input { flex: 1; font-size: 15px; font-weight: 500; background: transparent; border: none; color: var(--text); outline: none; min-width: 0; }
+    .name-input:focus { color: #fff; }
+    .val-input { width: 70px; text-align: right; font-size: 15px; font-weight: 600; background: var(--surface2); border: 1px solid var(--border-mid); border-radius: var(--radius-sm); color: var(--text); padding: 6px 10px; -webkit-appearance: none; appearance: none; outline: none; }
+    .val-input:focus { border-color: var(--accent); }
+    .toggle-btn { font-size: 12px; font-weight: 700; background: var(--surface2); border: 1px solid var(--border-mid); border-radius: var(--radius-sm); padding: 6px 10px; color: var(--accent); cursor: pointer; min-width: 38px; text-align: center; -webkit-tap-highlight-color: transparent; }
     .toggle-btn:active { opacity: 0.7; }
-
-    .del-btn {
-      background: none;
-      border: none;
-      color: var(--text-hint);
-      font-size: 20px;
-      line-height: 1;
-      cursor: pointer;
-      padding: 0 2px;
-      -webkit-tap-highlight-color: transparent;
-    }
-
+    .del-btn { background: none; border: none; color: var(--text-hint); font-size: 20px; line-height: 1; cursor: pointer; padding: 0 2px; -webkit-tap-highlight-color: transparent; }
     .del-btn:active { color: var(--red); }
-
-    .add-btn {
-      width: calc(100% - 32px);
-      margin: 12px 16px;
-      background: transparent;
-      border: 1px dashed var(--border-mid);
-      border-radius: var(--radius-sm);
-      padding: 11px;
-      font-size: 14px;
-      font-weight: 500;
-      color: var(--text-sec);
-      cursor: pointer;
-      -webkit-tap-highlight-color: transparent;
-      display: block;
-    }
-
+    .add-btn { width: 100%; margin-top: 10px; background: transparent; border: 1px dashed var(--border-mid); border-radius: var(--radius-sm); padding: 11px; font-size: 14px; font-weight: 500; color: var(--text-sec); cursor: pointer; -webkit-tap-highlight-color: transparent; }
     .add-btn:active { background: var(--surface2); }
-
-    /* Breakdown */
-    .result-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 14px 16px;
-      border-bottom: 1px solid var(--border);
-    }
-
+    .result-row { display: flex; justify-content: space-between; align-items: center; padding: 14px 16px; border-bottom: 1px solid var(--border); }
     .result-row:last-child { border-bottom: none; }
-
-    .result-label {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-size: 15px;
-      color: var(--text-sec);
-    }
-
-    .result-amount {
-      font-size: 16px;
-      font-weight: 700;
-      font-variant-numeric: tabular-nums;
-      letter-spacing: -0.3px;
-    }
-
-    /* Remainder */
-    .remainder-section {
-      margin: 0 16px 20px;
-    }
-
-    .remainder-card {
-      background: linear-gradient(135deg, #064e3b, #065f46);
-      border: 1px solid rgba(16,185,129,0.3);
-      border-radius: var(--radius);
-      padding: 18px 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .remainder-card.negative {
-      background: linear-gradient(135deg, #450a0a, #5a1a1a);
-      border-color: rgba(239,68,68,0.3);
-    }
-
-    .remainder-left { }
-
-    .remainder-title {
-      font-size: 11px;
-      font-weight: 600;
-      color: rgba(255,255,255,0.5);
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      margin-bottom: 4px;
-    }
-
-    .remainder-name {
-      font-size: 17px;
-      font-weight: 600;
-      color: #fff;
-    }
-
-    .remainder-amount {
-      font-size: 28px;
-      font-weight: 800;
-      color: var(--green);
-      letter-spacing: -1px;
-      font-variant-numeric: tabular-nums;
-    }
-
+    .result-label { display: flex; align-items: center; gap: 10px; font-size: 15px; color: var(--text-sec); }
+    .result-amount { font-size: 16px; font-weight: 700; letter-spacing: -0.3px; }
+    .remainder-card { background: linear-gradient(135deg, #064e3b, #065f46); border: 1px solid rgba(16,185,129,0.3); border-radius: var(--radius); padding: 18px 20px; display: flex; justify-content: space-between; align-items: center; }
+    .remainder-card.negative { background: linear-gradient(135deg, #450a0a, #5a1a1a); border-color: rgba(239,68,68,0.3); }
+    .remainder-title { font-size: 11px; font-weight: 600; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 4px; }
+    .remainder-name { font-size: 17px; font-weight: 600; color: #fff; }
+    .remainder-amount { font-size: 28px; font-weight: 800; color: var(--green); letter-spacing: -1px; }
     .remainder-amount.negative { color: var(--red); }
-
-    .warning {
-      font-size: 13px;
-      color: var(--red);
-      margin: 8px 20px 0;
-      display: none;
-    }
+    .warning { font-size: 13px; color: var(--red); margin: 8px 4px 0; display: none; }
+    .chart-card { background: var(--surface); border-radius: var(--radius); border: 1px solid var(--border); padding: 20px; display: flex; flex-direction: column; align-items: center; }
+    #pie-wrap { position: relative; width: 180px; height: 180px; margin-bottom: 20px; }
+    #pie-wrap svg { width: 100%; height: 100%; }
+    .pie-center { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; pointer-events: none; }
+    .pie-center-label { font-size: 11px; color: var(--text-hint); text-transform: uppercase; letter-spacing: 0.08em; }
+    .pie-center-val { font-size: 20px; font-weight: 700; color: var(--text); letter-spacing: -0.5px; }
+    .legend { width: 100%; display: flex; flex-direction: column; gap: 8px; }
+    .legend-row { display: flex; align-items: center; justify-content: space-between; }
+    .legend-left { display: flex; align-items: center; gap: 8px; }
+    .legend-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+    .legend-name { font-size: 14px; color: var(--text-sec); }
+    .legend-pct { font-size: 14px; font-weight: 600; color: var(--text); }
   </style>
 </head>
 <body>
 
-  <header>
-    <div class="header-top">
-      <div class="logo">💰</div>
-      <h1>Income Splitter</h1>
-    </div>
-    <p class="subtitle">Allocate your income automatically</p>
-  </header>
-
-  <div class="income-card">
-    <p class="income-label">Income received</p>
-    <div class="income-wrap">
-      <span class="currency-sym">$</span>
-      <input type="number" id="income" inputmode="decimal" placeholder="0.00" oninput="render()" />
-    </div>
+<header>
+  <div class="header-top">
+    <div class="logo">💰</div>
+    <h1>Income Splitter</h1>
   </div>
+  <p class="subtitle">Allocate your income automatically</p>
+</header>
 
-  <div class="section">
-    <p class="section-label">Accounts</p>
-    <div class="card">
-      <div id="accounts-list"></div>
-    </div>
-    <button class="add-btn" onclick="addAccount()">+ Add account</button>
+<div class="income-card">
+  <p class="income-label">Income received</p>
+  <div class="income-wrap">
+    <span class="currency-sym">$</span>
+    <input type="number" id="income" inputmode="decimal" placeholder="0.00" oninput="render()" />
   </div>
+</div>
 
-  <div class="section">
-    <p class="section-label">Breakdown</p>
-    <div class="card" id="breakdown"></div>
-    <p class="warning" id="warning">⚠ Allocations exceed income — please reduce values.</p>
-  </div>
+<div class="section">
+  <p class="section-label">Accounts</p>
+  <div class="card"><div id="accounts-list"></div></div>
+  <button class="add-btn" onclick="addAccount()">+ Add account</button>
+</div>
 
-  <div class="remainder-section">
-    <p class="section-label">Remainder</p>
-    <div class="remainder-card" id="remainder-card">
-      <div class="remainder-left">
-        <p class="remainder-title">Personal account</p>
-        <p class="remainder-name" id="remainder-name">Personal</p>
+<div class="section">
+  <p class="section-label">Breakdown</p>
+  <div class="card" id="breakdown"></div>
+  <p class="warning" id="warning">⚠ Allocations exceed income — please reduce values.</p>
+</div>
+
+<div class="section">
+  <p class="section-label">Distribution</p>
+  <div class="chart-card">
+    <div id="pie-wrap">
+      <svg id="pie-svg" viewBox="0 0 180 180"></svg>
+      <div class="pie-center">
+        <div class="pie-center-label">Total</div>
+        <div class="pie-center-val" id="pie-total">$0</div>
       </div>
-      <span class="remainder-amount" id="remainder-amount">$0.00</span>
     </div>
+    <div class="legend" id="pie-legend"></div>
   </div>
+</div>
 
-  <script>
-    const COLORS = ['#3b82f6','#a855f7','#f59e0b','#ec4899','#06b6d4','#f97316','#84cc16','#ef4444'];
-    const DEFAULT = [
-      { id: 1, name: 'Tax', mode: 'pct', value: 25 },
-      { id: 2, name: 'Bills', mode: 'pct', value: 30 },
-    ];
-    let saved = load();
-    let accounts = saved ? saved.accounts : JSON.parse(JSON.stringify(DEFAULT));
-    let nextId = saved ? saved.nextId : 3;
+<div class="section">
+  <p class="section-label">Remainder</p>
+  <div class="remainder-card" id="remainder-card">
+    <div>
+      <p class="remainder-title">Personal account</p>
+      <p class="remainder-name">Personal</p>
+    </div>
+    <span class="remainder-amount" id="remainder-amount">$0.00</span>
+  </div>
+</div>
 
-    function color(i) { return COLORS[i % COLORS.length]; }
+<script>
+  const COLORS = ['#3b82f6','#a855f7','#f59e0b','#ec4899','#06b6d4','#f97316','#84cc16','#ef4444'];
+  const DEFAULT = [
+    { id: 1, name: 'Tax', mode: 'fixed', value: 0 },
+    { id: 2, name: 'Bills', mode: 'fixed', value: 0 },
+  ];
 
-    function save() {
-      const data = JSON.stringify({ accounts, nextId });
-      const expires = new Date(Date.now() + 365*24*60*60*1000).toUTCString();
-      document.cookie = 'income_splitter=' + encodeURIComponent(data) + ';expires=' + expires + ';path=/';
-      try { localStorage.setItem('income_splitter', data); } catch(e) {}
+  function save() {
+    const data = JSON.stringify({ accounts, nextId });
+    const expires = new Date(Date.now() + 365*24*60*60*1000).toUTCString();
+    document.cookie = 'income_splitter=' + encodeURIComponent(data) + ';expires=' + expires + ';path=/';
+    try { localStorage.setItem('income_splitter', data); } catch(e) {}
+  }
+
+  function load() {
+    try { const ls = localStorage.getItem('income_splitter'); if (ls) return JSON.parse(ls); } catch(e) {}
+    const match = document.cookie.match(/income_splitter=([^;]+)/);
+    if (match) { try { return JSON.parse(decodeURIComponent(match[1])); } catch(e) {} }
+    return null;
+  }
+
+  let saved = load();
+  let accounts = saved ? saved.accounts : JSON.parse(JSON.stringify(DEFAULT));
+  let nextId = saved ? saved.nextId : 3;
+
+  function color(i) { return COLORS[i % COLORS.length]; }
+
+  function addAccount() {
+    accounts.push({ id: nextId++, name: 'New account', mode: 'fixed', value: 0 });
+    save(); render();
+    setTimeout(() => { const inp = document.querySelectorAll('.name-input'); if (inp.length) { inp[inp.length-1].focus(); inp[inp.length-1].select(); } }, 50);
+  }
+
+  function delAccount(id) { accounts = accounts.filter(a => a.id !== id); save(); render(); }
+
+  function toggleMode(id) {
+    const income = parseFloat(document.getElementById('income').value) || 0;
+    const a = accounts.find(a => a.id === id);
+    if (a.mode === 'pct') { a.mode = 'fixed'; a.value = parseFloat((income * a.value / 100).toFixed(2)); }
+    else { a.mode = 'pct'; a.value = income > 0 ? parseFloat((a.value / income * 100).toFixed(2)) : 0; }
+    save(); render();
+  }
+
+  function updateVal(id, v) { const a = accounts.find(a => a.id === id); if (a) a.value = parseFloat(v)||0; save(); calcBreakdown(); }
+  function updateName(id, v) { const a = accounts.find(a => a.id === id); if (a) a.name = v; save(); calcBreakdown(); }
+
+  function fmt(n) { return '$' + Math.max(0,n).toLocaleString('en-NZ', { minimumFractionDigits: 2, maximumFractionDigits: 2 }); }
+  function fmtShort(n) { return '$' + Math.max(0,n).toLocaleString('en-NZ', { maximumFractionDigits: 0 }); }
+
+  function drawPie(slices, total) {
+    const svg = document.getElementById('pie-svg');
+    const legend = document.getElementById('pie-legend');
+    const cx = 90, cy = 90, r = 72, inner = 46;
+    if (!total || slices.every(s => s.amt <= 0)) {
+      svg.innerHTML = `<circle cx="90" cy="90" r="72" fill="none" stroke="rgba(255,255,255,0.07)" stroke-width="26"/>`;
+      legend.innerHTML = ''; document.getElementById('pie-total').textContent = '$0'; return;
     }
+    document.getElementById('pie-total').textContent = fmtShort(total);
+    let startAngle = -Math.PI / 2, paths = '', legendHtml = '';
+    slices.forEach(s => {
+      const pct = s.amt / total, angle = pct * 2 * Math.PI, endAngle = startAngle + angle;
+      const x1 = cx + r * Math.cos(startAngle), y1 = cy + r * Math.sin(startAngle);
+      const x2 = cx + r * Math.cos(endAngle), y2 = cy + r * Math.sin(endAngle);
+      const ix1 = cx + inner * Math.cos(startAngle), iy1 = cy + inner * Math.sin(startAngle);
+      const ix2 = cx + inner * Math.cos(endAngle), iy2 = cy + inner * Math.sin(endAngle);
+      const large = angle > Math.PI ? 1 : 0;
+      if (pct > 0.001) paths += `<path d="M${ix1},${iy1} L${x1},${y1} A${r},${r} 0 ${large} 1 ${x2},${y2} L${ix2},${iy2} A${inner},${inner} 0 ${large} 0 ${ix1},${iy1} Z" fill="${s.color}" opacity="0.9"/>`;
+      legendHtml += `<div class="legend-row"><div class="legend-left"><div class="legend-dot" style="background:${s.color}"></div><span class="legend-name">${s.name}</span></div><span class="legend-pct">${(pct*100).toFixed(1)}%</span></div>`;
+      startAngle = endAngle;
+    });
+    svg.innerHTML = paths;
+    legend.innerHTML = legendHtml;
+  }
 
-    function load() {
-      // Try localStorage first
-      try {
-        const ls = localStorage.getItem('income_splitter');
-        if (ls) return JSON.parse(ls);
-      } catch(e) {}
-      // Fall back to cookie
-      const match = document.cookie.match(/income_splitter=([^;]+)/);
-      if (match) { try { return JSON.parse(decodeURIComponent(match[1])); } catch(e) {} }
-      return null;
-    }
+  function calcBreakdown() {
+    const income = parseFloat(document.getElementById('income').value) || 0;
+    let allocated = 0;
+    const results = accounts.map((a, i) => {
+      const amt = a.mode === 'pct' ? income * a.value / 100 : a.value;
+      allocated += amt;
+      return { name: a.name, amt, color: color(i) };
+    });
+    const remainder = income - allocated;
+    const over = allocated > income + 0.001;
+    document.getElementById('warning').style.display = over ? 'block' : 'none';
+    document.getElementById('breakdown').innerHTML = results.map(r => `
+      <div class="result-row">
+        <div class="result-label"><div class="dot" style="background:${r.color};color:${r.color}"></div>${r.name}</div>
+        <span class="result-amount" style="color:${r.color}">${fmt(r.amt)}</span>
+      </div>`).join('');
+    const rc = document.getElementById('remainder-card');
+    const ra = document.getElementById('remainder-amount');
+    rc.className = 'remainder-card' + (remainder < -0.001 ? ' negative' : '');
+    ra.className = 'remainder-amount' + (remainder < -0.001 ? ' negative' : '');
+    ra.textContent = fmt(remainder);
+    const pieSlices = [...results];
+    if (remainder > 0.001) pieSlices.push({ name: 'Personal', amt: remainder, color: '#10b981' });
+    drawPie(pieSlices, income);
+  }
 
-    function addAccount() {
-      accounts.push({ id: nextId++, name: 'New account', mode: 'pct', value: 0 });
-      save(); render();
-      setTimeout(() => {
-        const inputs = document.querySelectorAll('.name-input');
-        if (inputs.length) { inputs[inputs.length-1].focus(); inputs[inputs.length-1].select(); }
-      }, 50);
-    }
+  function render() {
+    document.getElementById('accounts-list').innerHTML = accounts.map((a, i) => `
+      <div class="account-row">
+        <div class="dot" style="background:${color(i)};color:${color(i)}"></div>
+        <input class="name-input" value="${a.name}" onchange="updateName(${a.id},this.value)" oninput="updateName(${a.id},this.value)" />
+        <input type="number" class="val-input" value="${a.value}" min="0" step="${a.mode==='pct'?'0.1':'1'}" inputmode="decimal" onchange="updateVal(${a.id},this.value)" oninput="updateVal(${a.id},this.value)" />
+        <button class="toggle-btn" onclick="toggleMode(${a.id})">${a.mode==='pct'?'%':'$'}</button>
+        <button class="del-btn" onclick="delAccount(${a.id})">×</button>
+      </div>`).join('');
+    calcBreakdown();
+  }
 
-    function delAccount(id) {
-      accounts = accounts.filter(a => a.id !== id);
-      save(); render();
-    }
-
-    function toggleMode(id) {
-      const income = parseFloat(document.getElementById('income').value) || 0;
-      const a = accounts.find(a => a.id === id);
-      if (a.mode === 'pct') {
-        a.mode = 'fixed';
-        a.value = parseFloat((income * a.value / 100).toFixed(2));
-      } else {
-        a.mode = 'pct';
-        a.value = income > 0 ? parseFloat((a.value / income * 100).toFixed(2)) : 0;
-      }
-      save(); render();
-    }
-
-    function updateVal(id, v) {
-      const a = accounts.find(a => a.id === id);
-      if (a) a.value = parseFloat(v) || 0;
-      save(); calcBreakdown();
-    }
-
-    function updateName(id, v) {
-      const a = accounts.find(a => a.id === id);
-      if (a) a.name = v;
-      save(); calcBreakdown();
-    }
-
-    function fmt(n) {
-      return '$' + Math.max(0,n).toLocaleString('en-NZ', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-    }
-
-    function calcBreakdown() {
-      const income = parseFloat(document.getElementById('income').value) || 0;
-      let allocated = 0;
-      const results = accounts.map((a, i) => {
-        const amt = a.mode === 'pct' ? income * a.value / 100 : a.value;
-        allocated += amt;
-        return { name: a.name, amt, color: color(i) };
-      });
-      const remainder = income - allocated;
-      const over = allocated > income + 0.001;
-      document.getElementById('warning').style.display = over ? 'block' : 'none';
-      document.getElementById('breakdown').innerHTML = results.map(r => `
-        <div class="result-row">
-          <div class="result-label">
-            <div class="dot" style="background:${r.color};color:${r.color}"></div>
-            ${r.name}
-          </div>
-          <span class="result-amount" style="color:${r.color}">${fmt(r.amt)}</span>
-        </div>`).join('');
-      const rc = document.getElementById('remainder-card');
-      const ra = document.getElementById('remainder-amount');
-      rc.className = 'remainder-card' + (remainder < -0.001 ? ' negative' : '');
-      ra.className = 'remainder-amount' + (remainder < -0.001 ? ' negative' : '');
-      ra.textContent = fmt(remainder);
-    }
-
-    function render() {
-      document.getElementById('accounts-list').innerHTML = accounts.map((a, i) => `
-        <div class="account-row">
-          <div class="dot" style="background:${color(i)};color:${color(i)}"></div>
-          <input class="name-input" value="${a.name}" onchange="updateName(${a.id},this.value)" oninput="updateName(${a.id},this.value)" />
-          <input type="number" class="val-input" value="${a.value}" min="0" step="${a.mode==='pct'?'0.1':'1'}" inputmode="decimal" onchange="updateVal(${a.id},this.value)" oninput="updateVal(${a.id},this.value)" />
-          <button class="toggle-btn" onclick="toggleMode(${a.id})">${a.mode==='pct'?'%':'$'}</button>
-          <button class="del-btn" onclick="delAccount(${a.id})" aria-label="Delete">×</button>
-        </div>`).join('');
-      calcBreakdown();
-    }
-
-    render();
-  </script>
+  render();
+</script>
 </body>
 </html>
