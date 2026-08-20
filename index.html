@@ -88,7 +88,7 @@
   <p class="income-label">Income received</p>
   <div class="income-wrap">
     <span class="currency-sym">$</span>
-    <input type="number" id="income" inputmode="decimal" placeholder="0.00" oninput="render()" />
+    <input type="number" id="income" inputmode="decimal" placeholder="0.00" oninput="render()" onfocus="this.select()" />
   </div>
 </div>
 
@@ -248,7 +248,7 @@
       <div class="account-row">
         <div class="dot" style="background:${color(i)};color:${color(i)}"></div>
         <input class="name-input" value="${a.name}" onchange="updateName(${a.id},this.value)" oninput="updateName(${a.id},this.value)" />
-        <input type="number" class="val-input" value="${a.value}" min="0" step="${a.mode==='pct'?'0.1':'1'}" inputmode="decimal" onchange="updateVal(${a.id},this.value)" oninput="updateVal(${a.id},this.value)" />
+        <input type="number" class="val-input" value="${a.value}" min="0" step="${a.mode==='pct'?'0.1':'1'}" inputmode="decimal" onchange="updateVal(${a.id},this.value)" oninput="updateVal(${a.id},this.value)" onfocus="this.select()" />
         <button class="toggle-btn" onclick="toggleMode(${a.id})">${a.mode==='pct'?'%':'$'}</button>
         <button class="del-btn" onclick="delAccount(${a.id})">×</button>
       </div>`).join('');
