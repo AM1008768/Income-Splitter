@@ -18,11 +18,10 @@
       --radius: 16px; --radius-sm: 10px;
     }
     body { font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; padding-bottom: 60px; }
-    header { padding: 56px 20px 20px; background: linear-gradient(180deg, #0d1528 0%, var(--bg) 100%); border-bottom: 1px solid var(--border); margin-bottom: 24px; }
-    .header-top { display: flex; align-items: center; gap: 12px; margin-bottom: 4px; }
-    .logo { width: 36px; height: 36px; background: linear-gradient(135deg, var(--accent), var(--accent2)); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 18px; }
-    header h1 { font-size: 22px; font-weight: 700; letter-spacing: -0.4px; background: linear-gradient(90deg, #fff, #94a3b8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-    .subtitle { font-size: 13px; color: var(--text-hint); margin-left: 48px; }
+    header { padding: 56px 20px 16px; background: linear-gradient(180deg, #0d1528 0%, var(--bg) 100%); border-bottom: 1px solid var(--border); margin-bottom: 24px; }
+    .header-top { display: flex; align-items: center; gap: 12px; }
+    .logo { width: 32px; height: 32px; background: linear-gradient(135deg, var(--accent), var(--accent2)); border-radius: 9px; display: flex; align-items: center; justify-content: center; font-size: 16px; }
+    header h1 { font-size: 20px; font-weight: 700; letter-spacing: -0.4px; background: linear-gradient(90deg, #fff, #94a3b8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
     .income-card { margin: 0 16px 20px; background: linear-gradient(135deg, #1e3a5f, #1a2a4a); border: 1px solid rgba(59,130,246,0.3); border-radius: var(--radius); padding: 20px; position: relative; overflow: hidden; }
     .income-card::before { content: ''; position: absolute; top: -40px; right: -40px; width: 120px; height: 120px; background: radial-gradient(circle, rgba(99,102,241,0.3), transparent); border-radius: 50%; }
     .income-label { font-size: 11px; font-weight: 600; color: var(--accent); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 10px; }
@@ -57,7 +56,12 @@
     .remainder-amount { font-size: 28px; font-weight: 800; color: var(--green); letter-spacing: -1px; }
     .remainder-amount.negative { color: var(--red); }
     .warning { font-size: 13px; color: var(--red); margin: 8px 4px 0; display: none; }
-    .chart-card { background: var(--surface); border-radius: var(--radius); border: 1px solid var(--border); padding: 20px; display: flex; flex-direction: column; align-items: center; }
+    .chart-card { background: var(--surface); border-radius: var(--radius); border: 1px solid var(--border); overflow: hidden; }
+    .chart-toggle { width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 14px 16px; background: none; border: none; color: var(--text-sec); font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+    .chart-toggle:active { background: var(--surface2); }
+    .chart-toggle-arrow { font-size: 11px; color: var(--text-hint); transition: transform 0.2s; }
+    .chart-toggle-arrow.open { transform: rotate(180deg); }
+    .chart-inner { padding: 0 20px 20px; display: flex; flex-direction: column; align-items: center; }
     #pie-wrap { position: relative; width: 180px; height: 180px; margin-bottom: 20px; }
     #pie-wrap svg { width: 100%; height: 100%; }
     .pie-center { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; pointer-events: none; }
@@ -78,7 +82,6 @@
     <div class="logo">💰</div>
     <h1>Income Splitter</h1>
   </div>
-  <p class="subtitle">Allocate your income automatically</p>
 </header>
 
 <div class="income-card">
@@ -104,6 +107,11 @@
 <div class="section">
   <p class="section-label">Distribution</p>
   <div class="chart-card">
+    <button class="chart-toggle" onclick="toggleChart()">
+      <span>Distribution</span>
+      <span class="chart-toggle-arrow open" id="chart-arrow">▼</span>
+    </button>
+    <div class="chart-inner" id="chart-inner">
     <div id="pie-wrap">
       <svg id="pie-svg" viewBox="0 0 180 180"></svg>
       <div class="pie-center">
@@ -112,6 +120,7 @@
       </div>
     </div>
     <div class="legend" id="pie-legend"></div>
+    </div>
   </div>
 </div>
 
@@ -134,7 +143,7 @@
   ];
 
   function save() {
-    const data = JSON.stringify({ accounts, nextId });
+    const data = JSON.stringify({ accounts, nextId, chartOpen });
     const expires = new Date(Date.now() + 365*24*60*60*1000).toUTCString();
     document.cookie = 'income_splitter=' + encodeURIComponent(data) + ';expires=' + expires + ';path=/';
     try { localStorage.setItem('income_splitter', data); } catch(e) {}
@@ -150,6 +159,13 @@
   let saved = load();
   let accounts = saved ? saved.accounts : JSON.parse(JSON.stringify(DEFAULT));
   let nextId = saved ? saved.nextId : 3;
+
+  let chartOpen = true;
+  function toggleChart() {
+    chartOpen = !chartOpen;
+    document.getElementById('chart-inner').style.display = chartOpen ? 'flex' : 'none';
+    document.getElementById('chart-arrow').className = 'chart-toggle-arrow' + (chartOpen ? ' open' : '');
+  }
 
   function color(i) { return COLORS[i % COLORS.length]; }
 
