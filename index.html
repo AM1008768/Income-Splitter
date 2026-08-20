@@ -160,11 +160,12 @@
   let accounts = saved ? saved.accounts : JSON.parse(JSON.stringify(DEFAULT));
   let nextId = saved ? saved.nextId : 3;
 
-  let chartOpen = true;
+  let chartOpen = saved ? saved.chartOpen !== false : true;
   function toggleChart() {
     chartOpen = !chartOpen;
     document.getElementById('chart-inner').style.display = chartOpen ? 'flex' : 'none';
     document.getElementById('chart-arrow').className = 'chart-toggle-arrow' + (chartOpen ? ' open' : '');
+    save();
   }
 
   function color(i) { return COLORS[i % COLORS.length]; }
@@ -255,6 +256,8 @@
   }
 
   render();
+  document.getElementById('chart-inner').style.display = chartOpen ? 'flex' : 'none';
+  document.getElementById('chart-arrow').className = 'chart-toggle-arrow' + (chartOpen ? ' open' : '');
 </script>
 </body>
 </html>
